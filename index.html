@@ -3,19 +3,35 @@
   <body>
     <div id="main">
         <button class="btn btn-outline-primary" id="make_node" type="button" value="add_node">Add Node</button>
+        <svg id="svg_main"></svg>
     </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="node_modules/dagre/dist/dagre.min.js"></script>
     <script src="node_modules/crypto-js/crypto-js.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="node_modules/lodash/lodash.js"></script>
+    <script src="node_modules/graphlib/dist/graphlib.core.js"></script>
+    <script src="node_modules/dagre/dist/dagre.core.js"></script>
+    <script src="node_modules/dagre-d3/dist/dagre-d3.core.js"></script>
 
     <script type="text/javascript">
       // Create a new directed graph
       var g = new dagre.graphlib.Graph();
 
+      const svg_width = 1000;
+      const svg_height = 500;
+      var svg = d3.select("#svg_main")
+                  .attr("width", svg_width)
+                  .attr("height", svg_height);
+
+      var svgGroup = svg.append("g");
+
       // Set an object for the graph label
       g.setGraph({});
       g.setDefaultEdgeLabel(function() { return {}; });
+
+      // Create the renderer
+      var render = new dagreD3.render();
 
       var previous_head_hash = "";
       $('#make_node').click( function(){
@@ -29,7 +45,6 @@
         g.setNode(encrypted_hash, { label: text, width: 100, height: 100 });
         if (g.nodes().length > 1) {
           g.setEdge(previous_head_hash, encrypted_hash);
-          dagre.layout(g);
 
           g.nodes().forEach(function(v) {
                console.log("Node " + v + ": " + JSON.stringify(g.node(v)));
@@ -37,9 +52,12 @@
           g.edges().forEach(function(e) {
               console.log("Edge " + e.v + " -> " + e.w + ": " + JSON.stringify(g.edge(e)));
           });
+
+          dagre.layout(g);
+          // Run the renderer. This is what draws the final graph.
+          render(svgGroup, g);
         }
         previous_head_hash = encrypted_hash;
-
       });
 
     </script>
