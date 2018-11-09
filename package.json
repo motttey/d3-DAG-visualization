@@ -1,0 +1,23 @@
+{
+  "name": "dag-example",
+  "version": "1.0.0",
+  "description": "for master thesis",
+  "main": "index.js",
+  "dependencies": {
+    "dagre": "^0.8.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/motttey/d3-DAG-visualization.git"
+  },
+  "author": "motttey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/motttey/d3-DAG-visualization/issues"
+  },
+  "homepage": "https://github.com/motttey/d3-DAG-visualization#readme"
+}
