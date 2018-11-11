@@ -48,11 +48,13 @@
       // Set an object for the graph label
       g.setGraph({});
       g.setDefaultEdgeLabel(function() { return {}; });
+      g.graph().rankDir = 'LR';
 
       // Create the renderer
       var render = new dagreD3.render();
 
       var previous_head_hash = "";
+
       $('#make_node').click( function(){
         let text = "hoge";
         let str = CryptoJS.SHA256(text);
@@ -61,7 +63,11 @@
         let encrypted_hash = CryptoJS.AES.encrypt(current_time, hashbase64).toString();
         console.log(encrypted_hash);
 
-        g.setNode(encrypted_hash, { label: text, width: 100, height: 100 });
+        g.setNode(encrypted_hash, {
+          labelType: 'html',
+          label: "<input type='button' id='"+encrypted_hash+"' class='"+text+"' value='"+text+"'></input>",
+          width: 100, height: 100
+        });
         if (g.nodes().length > 1) {
           g.setEdge(previous_head_hash, encrypted_hash);
 
@@ -77,6 +83,11 @@
           render(svgGroup, g);
         }
         previous_head_hash = encrypted_hash;
+
+        $("input[type='button']").on('click', function() {
+          previous_head_hash = $(this).attr("id");
+        });
+
       });
 
     </script>
