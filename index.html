@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html>
   <body>
+    <style id="css">
+    body {
+      font: 300 14px 'Helvetica Neue', Helvetica;
+    }
+    .node rect,
+    .node circle,
+    .node ellipse,
+    .node polygon {
+      stroke: #333;
+      fill: #fff;
+      stroke-width: 1.5px;
+    }
+    .edgePath path.path {
+      stroke: #333;
+      fill: none;
+      stroke-width: 1.5px;
+    }
+    </style>
+
     <div id="main">
         <button class="btn btn-outline-primary" id="make_node" type="button" value="add_node">Add Node</button>
         <svg id="svg_main"></svg>
